@@ -1,0 +1,90 @@
+h1 {
+  font-size: 35px;
+}
+/* Reset and basic setup */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Patrick Hand", sans-serif;
+  background-color: rgb(109, 187, 212);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Main Game Box */
+.game-container {
+  padding: 15px;
+  min-height: 50vh;
+  width: 90%;
+  max-width: 600px;
+  background-color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.button:hover {
+  transform: scale(1);
+  color: red;
+}
+
+.button {
+  border: none;
+  outline: none;
+  font-family: "Patrick Hand";
+  font-size: 35px;
+  width: 48px;
+  height: 42px;
+  background-color: transparent;
+  cursor: pointer;
+  color: rgb(46, 44, 39);
+  position: relative;
+}
+
+.hint-box {
+  font-size: 28px;
+  color: #444;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+#displayed-word {
+  font-size: 49px;
+  letter-spacing: 5px;
+  color: #333;
+  font-weight: bold;
+  height: 75px;
+}
+
+.button.wrong::after {
+  content: "X";
+  color: red;
+  position: absolute;
+  opacity: 0.9;
+  font-size: 40px;
+  width: 35px;
+  height: 35px;
+  left: 6px;
+  bottom: 10px;
+}
+
+.button.correct::after {
+  content: "";
+  display: flex;
+  position: absolute;
+  border: 2px solid blue;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  top: 5px;
+  left: 5px;
+}
+
+.game-message {
+  font-size: 35px;
+}

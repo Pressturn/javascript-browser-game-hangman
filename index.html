@@ -10,52 +10,65 @@
     <title>Hangman</title>
 </head>
 
-<body>
-    <div class="game-container">
-        <h1> Hangman Game</h1>
-        <div id="hangman-box"> </div>
-        <div class="hangman-assets">
-            <video id="hangman-video" width="250" autoplay muted>
-                <source src="assets/0.mp4" type="video/mp4">
-            </video>
+<!-- start screen -->
+<div id="start-screen" class="game-container">
+    <h1> Welcome to Hangman!</h1>
+    <p> Objective: Figure out the hidden word in less than <u>7</u> tries</p>
+    <p>Guess letters by clicking on the keyboard buttons</p>
+    <button id="play-btn">Play</button>
+</div>
+
+<!-- main page game  -->
+<div id="game-screen" class="game-container">
+    <h1> Hangman Game</h1>
+    <div id="guess-checker"> </div>
+    <div class="hangman-assets">
+        <video id="hangman-video" width="250" autoplay muted>
+            <source src="assets/0.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="category-hint" class="hint-box"></div>
+    <div id="game-message"></div>
+    <div id="displayed-word"></div>
+
+    <div class="keyboard">
+        <div class="keyboard-row">
+            <button class="button">Q</button>
+            <button class="button">W</button>
+            <button class="button">E</button>
+            <button class="button">R</button>
+            <button class="button">T</button>
+            <button class="button">Y</button>
+            <button class="button">U</button>
+            <button class="button">I</button>
+            <button class="button">O</button>
+            <button class="button">P</button>
         </div>
-        <div id="game-message" class="game-message"></div>
-        <div id="category-hint" class="hint-box"></div>
-        <div id="displayed-word"></div>
-         <div class="keyboard">
-            <div class="keyboard-row">
-                <button class="button">Q</button>
-                <button class="button">W</button>
-                <button class="button">E</button>
-                <button class="button">R</button>
-                <button class="button">T</button>
-                <button class="button">Y</button>
-                <button class="button">U</button>
-                <button class="button">I</button>
-                <button class="button">O</button>
-                <button class="button">P</button>
-            </div>
-            <div class="keyboard-row">
-                <button class="button">A</button>
-                <button class="button">S</button>
-                <button class="button">D</button>
-                <button class="button">F</button>
-                <button class="button">G</button>
-                <button class="button">H</button>
-                <button class="button">J</button>
-                <button class="button">K</button>
-                <button class="button">L</button>
-            </div>
-            <div class="keyboard-row">
-                <button class="button">Z</button>
-                <button class="button">X</button>
-                <button class="button">C</button>
-                <button class="button">V</button>
-                <button class="button">B</button>
-                <button class="button">N</button>
-                <button class="button">M</button>
-            </div>
+        <div class="keyboard-row">
+            <button class="button">A</button>
+            <button class="button">S</button>
+            <button class="button">D</button>
+            <button class="button">F</button>
+            <button class="button">G</button>
+            <button class="button">H</button>
+            <button class="button">J</button>
+            <button class="button">K</button>
+            <button class="button">L</button>
         </div>
+        <div class="keyboard-row">
+            <button class="button">Z</button>
+            <button class="button">X</button>
+            <button class="button">C</button>
+            <button class="button">V</button>
+            <button class="button">B</button>
+            <button class="button">N</button>
+            <button class="button">M</button>
+        </div>
+    </div>
+
+    <button id="reset">Reset</button>
+</div>
 </body>
 
 </html>

@@ -1,7 +1,3 @@
-h1 {
-  font-size: 35px;
-}
-/* Reset and basic setup */
 body {
   margin: 0;
   padding: 0;
@@ -13,11 +9,10 @@ body {
   height: 100vh;
 }
 
-/* Main Game Box */
 .game-container {
-  padding: 15px;
+  padding: 10px;
   min-height: 50vh;
-  width: 90%;
+  width: 80%;
   max-width: 600px;
   background-color: #ffffff;
   border: 2px solid #333;
@@ -25,6 +20,26 @@ body {
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   text-align: center;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+p {
+  font-size: 25px;
+}
+
+#play-btn {
+  font-size: 24px;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+
+#play-btn:hover {
+  cursor: pointer;
+  background-color: rgb(35, 35, 171);
+  color: white;
 }
 
 .button:hover {
@@ -43,22 +58,6 @@ body {
   cursor: pointer;
   color: rgb(46, 44, 39);
   position: relative;
-}
-
-.hint-box {
-  font-size: 28px;
-  color: #444;
-  font-weight: 600;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-#displayed-word {
-  font-size: 49px;
-  letter-spacing: 5px;
-  color: #333;
-  font-weight: bold;
-  height: 75px;
 }
 
 .button.wrong::after {
@@ -85,6 +84,47 @@ body {
   left: 5px;
 }
 
-.game-message {
+.hint-box {
+  font-size: 28px;
+  color: #444;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+#displayed-word {
+  font-size: 49px;
+  letter-spacing: 5px;
+  color: #333;
+  font-weight: bold;
+  height: 75px;
+}
+
+
+
+#game-message {
   font-size: 35px;
+}
+
+#reset {
+  display: none;
+  font-size: 24px;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin: 10px auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.revealed-word {
+  font-size: 38px;
+  color: red;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+#guess-checker{
+  font-size: 31px;
 }

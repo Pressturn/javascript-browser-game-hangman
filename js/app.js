@@ -58,7 +58,7 @@ const gameWords = [
 
 let word;
 let hint;
-let displayWord = [];
+let guessingWord = [];
 let wrongGuess = 0;
 
 
@@ -67,10 +67,10 @@ const startScreen = document.querySelector('#start-screen');
 const gameScreen = document.querySelector('#game-screen');
 
 const playBtn = document.querySelector('#play-btn');
-const buttonEl = document.querySelectorAll('.button');
+const buttonEls = document.querySelectorAll('.button');
 const hintEl = document.querySelector('#category-hint');
 const guessEl = document.querySelector('#guess-checker');
-const displayedWordEl = document.querySelector('#displayed-word');
+const guessingWordEl = document.querySelector('#guessing-word');
 const videoEl = document.querySelector('#hangman-video');
 const messageEl = document.querySelector('#game-message');
 const resetBtnEl = document.querySelector('#reset');
@@ -79,17 +79,17 @@ const resetBtnEl = document.querySelector('#reset');
 function init() {
     wrongGuess = 0;
     messageEl.textContent = '';
-    buttonEl.forEach(button => {
+    buttonEls.forEach(button => {
         button.disabled = false;
         button.classList.remove('correct', 'wrong');
     });
 
-    resetBtnEl.style.display = 'none';
+    resetBtnEl.style.display = 'none'; 
     videoEl.src = 'assets/0.mp4';
     videoEl.load();
 
     pickRandomWord()
-    buildDisplayWord()
+    buildGuessingWord()
     render()
 }
 
@@ -101,34 +101,35 @@ function pickRandomWord() {
     hint = selectedWord.category;
 }
 
-function buildDisplayWord() {
-    displayWord = [];
+function buildGuessingWord() {
+    guessingWord = [];
     for (let char of word) {
-        displayWord.push('_');
+        guessingWord.push('_');
     }
 }
 
 function render() {
-    displayedWordEl.textContent = displayWord.join(' ');
-    hintEl.textContent = `Hint: ${hint}`;
+    guessingWordEl.textContent = guessingWord.join(' '); 
+    hintEl.textContent = `Hint: ${hint}`; 
     guessEl.textContent = `Wrong Guesses: ${wrongGuess}/7`;
 }
 
 function handleLetterClick(event) {
     const button = event.target;
-    const letter = button.textContent.toLowerCase();
+    const letter = button.textContent.toLowerCase(); 
 
     button.disabled = true
 
     let letterFound = false;
     for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
-            displayWord[i] = letter;
+            guessingWord[i] = letter; 
             letterFound = true;
         }
     }
 
-    if (letterFound) {
+
+    if (letterFound === true) { 
         button.classList.add('correct');
     } else {
         button.classList.add('wrong');
@@ -138,8 +139,8 @@ function handleLetterClick(event) {
 
     render();
     checkGameStatus();
-
 }
+
 function updateVideo() {
     videoEl.src = `assets/${wrongGuess}.mp4`;
     videoEl.load();
@@ -159,7 +160,7 @@ function checkGameStatus() {
         resetBtnEl.style.display = 'block';
 
 
-    } else if (displayWord.join('') === word) {
+    } else if (guessingWord.join('') === word) {
         messageEl.textContent = 'You Won!';
         resetBtnEl.style.display = 'block';
 
@@ -170,7 +171,7 @@ function checkGameStatus() {
 }
 
 function disableKeyboard() {
-    buttonEl.forEach(button => button.disabled = true);
+    buttonEls.forEach(button => button.disabled = true);
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
@@ -181,7 +182,7 @@ playBtn.addEventListener('click', () => {
     gameScreen.classList.remove('hidden');
 });
 
-buttonEl.forEach(button => {
+buttonEls.forEach(button => {
     button.addEventListener('click', handleLetterClick);
 });
 

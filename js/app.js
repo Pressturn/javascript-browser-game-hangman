@@ -25,7 +25,8 @@ storing the highscore and input name
 add reset button
 add game start button
 hangman counter increase
-*/
+
+
 /*-------------------------------- Constants --------------------------------*/
 const maxWrongGuesses = 7;
 const gameWords = [
@@ -55,36 +56,52 @@ const gameWords = [
 ]
 
 /*---------------------------- Variables (state) ----------------------------*/
-
+// Current word and hint for this round
 let word;
 let hint;
-let guessingWord = [];
-let wrongGuess = 0;
 
+// Array representing the guessed letters
+let guessingWord = [];
+
+let numOfGuesses = 0;
+
+let currentScore = 0;
+let highScore = Number(localStorage.getItem('hangmanHighScore')) || 0;
 
 /*------------------------ Cached Element References ------------------------*/
-const startScreen = document.querySelector('#start-screen');
-const gameScreen = document.querySelector('#game-screen');
+const startScreenEl = document.querySelector('#start-screen');
+const gameScreenEl = document.querySelector('#game-screen');
 
-const playBtn = document.querySelector('#play-btn');
+// Button elements
+const playBtnEl = document.querySelector('#play-btn');
 const buttonEls = document.querySelectorAll('.button');
-const hintEl = document.querySelector('#category-hint');
-const guessEl = document.querySelector('#guess-checker');
-const guessingWordEl = document.querySelector('#guessing-word');
-const videoEl = document.querySelector('#hangman-video');
-const messageEl = document.querySelector('#game-message');
+const nextBtnEl = document.querySelector('#next');
 const resetBtnEl = document.querySelector('#reset');
+
+// Game messages
+const scoreEl = document.querySelector('#score');
+const hintEl = document.querySelector('#category-hint');
+const gameMessageEl = document.querySelector('#game-message');
+const guessCheckerEl = document.querySelector('#guess-checker');
+const guessingWordEl = document.querySelector('#guessing-word');
+
+const videoEl = document.querySelector('#hangman-video');
+
 /*-------------------------------- Functions --------------------------------*/
 
 function init() {
-    wrongGuess = 0;
-    messageEl.textContent = '';
+    numOfGuesses = 0;
+    gameMessageEl.textContent = '';
+
     buttonEls.forEach(button => {
         button.disabled = false;
         button.classList.remove('correct', 'wrong');
     });
 
-    resetBtnEl.style.display = 'none'; 
+    resetBtnEl.style.display = 'none';
+    nextBtnEl.style.display = 'none';
+
+
     videoEl.src = 'assets/0.mp4';
     videoEl.load();
 
@@ -93,6 +110,7 @@ function init() {
     render()
 }
 
+// Choose a random word from the gameWords array and set the hint
 function pickRandomWord() {
     const randomWord = Math.floor(Math.random() * gameWords.length);
     const selectedWord = gameWords[randomWord];
@@ -101,6 +119,7 @@ function pickRandomWord() {
     hint = selectedWord.category;
 }
 
+// To show an empty guessing word
 function buildGuessingWord() {
     guessingWord = [];
     for (let char of word) {
@@ -108,32 +127,35 @@ function buildGuessingWord() {
     }
 }
 
+// To update after every click
 function render() {
-    guessingWordEl.textContent = guessingWord.join(' '); 
-    hintEl.textContent = `Hint: ${hint}`; 
-    guessEl.textContent = `Wrong Guesses: ${wrongGuess}/7`;
+    guessingWordEl.textContent = guessingWord.join(' ');
+    hintEl.textContent = `Hint: ${hint}`;
+    guessCheckerEl.textContent = `Wrong Guesses: ${numOfGuesses}/7`;
 }
 
+// Main game logic
 function handleLetterClick(event) {
     const button = event.target;
-    const letter = button.textContent.toLowerCase(); 
-
+    const letter = button.textContent.toLowerCase();
     button.disabled = true
 
+
+    // loop to check if the letter tallies with the word
     let letterFound = false;
     for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
-            guessingWord[i] = letter; 
+            guessingWord[i] = letter;
             letterFound = true;
         }
     }
 
-
-    if (letterFound === true) { 
+    // Update to guess letters or wrong guess count
+    if (letterFound === true) {
         button.classList.add('correct');
     } else {
         button.classList.add('wrong');
-        wrongGuess++;
+        numOfGuesses++;
         updateVideo();
     }
 
@@ -141,8 +163,48 @@ function handleLetterClick(event) {
     checkGameStatus();
 }
 
+// Check win, loss, current score and highscore
+function checkGameStatus() {
+    if (numOfGuesses === maxWrongGuesses) {
+        gameMessageEl.innerHTML = `You Lost! The word was <span class="revealed-word">${word}</span>`;
+        disableKeyboard();
+
+        nextBtnEl.style.display = 'none';
+        resetBtnEl.style.display = 'block';
+        currentScore = 0;
+        updateHighScore();
+
+    // Win condition 
+    } else if (guessingWord.join('') === word) {
+        gameMessageEl.textContent = 'You Won!';
+
+        playWinVideo()
+        disableKeyboard();
+
+        currentScore++;
+
+        if (currentScore > highScore) {
+            highScore = currentScore
+            localStorage.setItem('hangmanHighScore', highScore);
+        }
+
+        updateHighScore()
+
+        nextBtnEl.style.display = 'block';
+        resetBtnEl.style.display = 'none';
+    }
+}
+
+function disableKeyboard() {
+    buttonEls.forEach(button => button.disabled = true);
+}
+
+function updateHighScore() {
+    scoreEl.textContent = `Score: ${currentScore} | High Score: ${highScore}`;
+}
+
 function updateVideo() {
-    videoEl.src = `assets/${wrongGuess}.mp4`;
+    videoEl.src = `assets/${numOfGuesses}.mp4`;
     videoEl.load();
     videoEl.play();
 }
@@ -153,39 +215,29 @@ function playWinVideo() {
     videoEl.play();
 }
 
-function checkGameStatus() {
-    if (wrongGuess === maxWrongGuesses) {
-        messageEl.innerHTML = `You Lost! The word was <span class="revealed-word">${word}</span>`;
-        disableKeyboard();
-        resetBtnEl.style.display = 'block';
-
-
-    } else if (guessingWord.join('') === word) {
-        messageEl.textContent = 'You Won!';
-        resetBtnEl.style.display = 'block';
-
-        playWinVideo()
-        disableKeyboard();
-
-    }
-}
-
-function disableKeyboard() {
-    buttonEls.forEach(button => button.disabled = true);
-}
-
 /*----------------------------- Event Listeners -----------------------------*/
-gameScreen.classList.add('hidden');
 
-playBtn.addEventListener('click', () => {
-    startScreen.classList.add('hidden');
-    gameScreen.classList.remove('hidden');
+// listen when start screen play button clicked
+playBtnEl.addEventListener('click', () => {
+    startScreenEl.classList.add('hidden');
+    gameScreenEl.classList.remove('hidden');
 });
 
+// listen to button clicked
 buttonEls.forEach(button => {
     button.addEventListener('click', handleLetterClick);
 });
 
-resetBtnEl.addEventListener('click', init);
+// listen when reset button clicked
+resetBtnEl.addEventListener('click', () => {
+    currentScore = 0;
+    updateHighScore();
+    init();
+});
 
+// listen when reset button clicked
+nextBtnEl.addEventListener('click', init);
+
+// hide starting screen and initialise 
+gameScreenEl.classList.add('hidden');
 init();

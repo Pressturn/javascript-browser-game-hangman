@@ -48,31 +48,32 @@ p {
   width: 48px;
   height: 42px;
   color: rgb(46, 44, 39);
-  position: relative;
+  position: relative; /* position button so pseudo-elements can be positioned */
 }
 
+/* Red X overlay for wrong guesses */
 .button.wrong::after {
-  position: absolute;
+  position: absolute; /* position relative to button position */
   content: "X";
   color: red;
-  opacity: 0.9;
-  font-size: 40px;
+  opacity: 0.7;
+  font-size: 44px;
   width: 35px;
   height: 35px;
-  left: 6px;
-  bottom: 10px;
+  left: 8px;
+  bottom: 12px;
 }
 
+/* Blue circle overlay for correct guesses */
 .button.correct::after {
   position: absolute;
   content: "";
-  display: flex;
-  border: 2px solid blue;
+  border: 3px solid blue;
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  top: 5px;
-  left: 5px;
+  top: 4px;
+  left: 4px;
 }
 
 .button:hover {
@@ -101,14 +102,6 @@ p {
   font-size: 35px;
 }
 
-#reset {
-  display: none;
-  font-size: 24px;
-  border-radius: 8px;
-  padding: 10px 20px;
-  margin: 10px auto;
-}
-
 .hidden {
   display: none;
 }
@@ -128,4 +121,32 @@ p {
   display: flex;
   flex-direction: column;
   padding: 90px;
+}
+
+#next {
+  display: none;
+  font-size: 32px;
+  font-family: "Patrick Hand";
+  letter-spacing: 2px;
+  border-radius: 12px;
+}
+
+#reset {
+  display: none;
+  font-size: 32px;
+  font-family: "Patrick Hand";
+  letter-spacing: 2px;
+  border-radius: 12px;
+}
+
+.action-buttons {
+  justify-content: center;
+  display: flex;
+  padding: 14px 24px;
+  gap: 30px;
+}
+
+#score{
+  font-size: 30px;
+  padding: 8px;
 }

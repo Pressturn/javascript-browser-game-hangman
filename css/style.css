@@ -82,7 +82,7 @@ p {
   cursor: pointer;
 }
 
-.hint-box {
+#category-hint {
   font-size: 28px;
   color: #444;
   font-weight: 600;
@@ -131,6 +131,18 @@ p {
   border-radius: 12px;
 }
 
+#next:hover {
+  cursor: pointer;
+  background-color: rgb(35, 35, 171);
+  color: white;
+}
+
+#reset:hover {
+  cursor: pointer;
+  background-color: rgb(35, 35, 171);
+  color: white;
+}
+
 #reset {
   display: none;
   font-size: 32px;
@@ -146,7 +158,7 @@ p {
   gap: 30px;
 }
 
-#score{
+#score {
   font-size: 30px;
   padding: 8px;
 }

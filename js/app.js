@@ -156,22 +156,27 @@ function handleLetterClick(event) {
     checkGameStatus();
 }
 
+// To update after every click
+function render() {
+    guessingWordEl.textContent = guessingWord.join(' ');
+    hintEl.textContent = `Hint: ${hint}`;
+    guessCheckerEl.textContent = `Wrong Guesses: ${numOfGuesses}/7`;
+}
+
 // Check win, loss, current score and highscore
 function checkGameStatus() {
     if (numOfGuesses === maxWrongGuesses) {
         gameMessageEl.innerHTML = `You Lost! The word was <span class="revealed-word">${word}</span>`;
         disableKeyboard();
 
-        nextBtnEl.style.display = 'none';
         resetBtnEl.style.display = 'block';
-        currentScore = 0;
         updateHighScore();
 
     // Win condition 
     } else if (guessingWord.join('') === word) {
         gameMessageEl.textContent = 'You Won!';
 
-        playWinVideo()
+        playWinVideo();
         disableKeyboard();
 
         currentScore++;
@@ -181,10 +186,8 @@ function checkGameStatus() {
             localStorage.setItem('hangmanHighScore', highScore);
         }
 
-        updateHighScore()
-
+        updateHighScore();
         nextBtnEl.style.display = 'block';
-        resetBtnEl.style.display = 'none';
     }
 }
 
@@ -208,12 +211,7 @@ function playWinVideo() {
     videoEl.play();
 }
 
-// To update after every click
-function render() {
-    guessingWordEl.textContent = guessingWord.join(' ');
-    hintEl.textContent = `Hint: ${hint}`;
-    guessCheckerEl.textContent = `Wrong Guesses: ${numOfGuesses}/7`;
-}
+
 
 /*----------------------------- Event Listeners -----------------------------*/
 

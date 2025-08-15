@@ -107,6 +107,7 @@ function init() {
 
     pickRandomWord()
     buildGuessingWord()
+    updateHighScore()
     render()
 }
 
@@ -127,26 +128,18 @@ function buildGuessingWord() {
     }
 }
 
-// To update after every click
-function render() {
-    guessingWordEl.textContent = guessingWord.join(' ');
-    hintEl.textContent = `Hint: ${hint}`;
-    guessCheckerEl.textContent = `Wrong Guesses: ${numOfGuesses}/7`;
-}
-
 // Main game logic
 function handleLetterClick(event) {
     const button = event.target;
     const letter = button.textContent.toLowerCase();
-    button.disabled = true
-
+    button.disabled = true;
 
     // loop to check if the letter tallies with the word
     let letterFound = false;
     for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
             guessingWord[i] = letter;
-            letterFound = true;
+            letterFound = true
         }
     }
 
@@ -213,6 +206,13 @@ function playWinVideo() {
     videoEl.src = 'assets/win.mp4';
     videoEl.load();
     videoEl.play();
+}
+
+// To update after every click
+function render() {
+    guessingWordEl.textContent = guessingWord.join(' ');
+    hintEl.textContent = `Hint: ${hint}`;
+    guessCheckerEl.textContent = `Wrong Guesses: ${numOfGuesses}/7`;
 }
 
 /*----------------------------- Event Listeners -----------------------------*/

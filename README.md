@@ -18,11 +18,11 @@ To Start:
 2. CSS
 3. Javascript
 
---
+---
 
 ## Credits
 
 - Game inspiration: https://poki.com/en/g/hangman
-- Video assets/tools: Canva
+- Video assets/tools: https://www.canva.com/
 - Font: Patrick Hand, https://fonts.google.com/specimen/Patrick+Hand
 

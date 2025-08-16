@@ -129,6 +129,7 @@ function buildGuessingWord() {
 }
 
 // Main game logic
+// Taking the event from the button click 
 function handleLetterClick(event) {
     const button = event.target;
     const letter = button.textContent.toLowerCase();
@@ -210,8 +211,6 @@ function playWinVideo() {
     videoEl.load();
     videoEl.play();
 }
-
-
 
 /*----------------------------- Event Listeners -----------------------------*/
 
